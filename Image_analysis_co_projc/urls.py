@@ -5,6 +5,7 @@ from django.conf.urls import include
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('', include('uploads.urls')),
     path('admin/', admin.site.urls),
 ]
 

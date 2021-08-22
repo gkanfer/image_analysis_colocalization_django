@@ -7,7 +7,7 @@ from numpy import asarray
 from skimage.exposure import rescale_intensity,histogram
 
 def get_image(image,action):
-    image = np.array(image)
+    #image = np.array(image)
     if action=='Chose_Intensity':
         percentiles = np.percentile(image, (1, 89))
         scaled_ch1 = rescale_intensity(image, in_range=tuple(percentiles))

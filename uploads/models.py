@@ -4,6 +4,8 @@ import tifffile as tfi
 from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
+import pdb
+import numpy as np
 # Create your models here.
 ACTION_CHOICES = (
     ('No_Filter','no filter'),
@@ -19,8 +21,12 @@ class Upload(models.Model):
         return str(self.id)
     def save(self,*args,**kwargs):
         #open image
-        pixels = tfi.imread(self.image)
-        pixels = pixels[0,:,:]
+        pixels = Image.open(self.image)
+        #breakpoint()
+        #pixels = tfi.imread(self.image)
+        pixels = np.array(pixels)
+        pixels=pixels[:,:,0]
+        #pixels = pixels[0,:,:]
         #use the normalisation method
         img = get_image(pixels,self.action)
         im_pil=Image.fromarray(img)
@@ -30,6 +36,7 @@ class Upload(models.Model):
         image_png = buffer.getvalue()
         self.image.save(str(self.image), ContentFile(image_png),save=False)
         super().save(*args,**kwargs)
+        return self.image_png
 
 
 
