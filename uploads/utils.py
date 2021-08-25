@@ -9,7 +9,7 @@ from skimage.exposure import rescale_intensity,histogram
 
 def get_image(image):
     pixels = np.array(image)
-    pixels=pixels[50:150,50:150,:]
+    pixels=pixels[50:300,50:300,:]
     return pixels
 
 
