@@ -14,21 +14,22 @@ ACTION_CHOICES = (
 
 class Upload(models.Model):
     image = models.ImageField(upload_to='images')
+    title = models.CharField(max_length=200)
     action = models.CharField(max_length=50,choices=ACTION_CHOICES)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return str(self.id)
+        return self.title
     def save(self,*args,**kwargs):
         #open image
         pixels = Image.open(self.image)
         #breakpoint()
         #pixels = tfi.imread(self.image)
         pixels = np.array(pixels)
-        pixels=pixels[:,:,0]
+        pixels=pixels[:,:,:]
         #pixels = pixels[0,:,:]
         #use the normalisation method
-        img = get_image(pixels,self.action)
+        img = get_image(pixels)
         im_pil=Image.fromarray(img)
         #save
         buffer = BytesIO()
@@ -36,7 +37,7 @@ class Upload(models.Model):
         image_png = buffer.getvalue()
         self.image.save(str(self.image), ContentFile(image_png),save=False)
         super().save(*args,**kwargs)
-        return self.image_png
+        #return self.image_png
 
 
 
