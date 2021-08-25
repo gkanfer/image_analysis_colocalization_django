@@ -1,51 +1,6 @@
-<!DOCTYPE html>
-<html>
-        <head>
-                <meta charset="utf-8">
-                <title>Colocalisation app</title>
-        </head>
+{% extends 'base.html' %}
 
-        <body>
-        </br>
-        <center>
-                <h1>Minimal Django File Upload Example</h1>
-        </center>
+{% block 'content' %}
+    <h1>Gil Kanfer, PhD</h1>
 
-        </br></br>
-                <!-- List of uploaded documents -->
-                {% if documents %}
-                        <ul>
-                                <h2>Input Image</h2>
-                                <a href="{{ documents.image.url }}">
-                                <img src="{{ documents.image.url }}" class="img-fluid" width="400" height="400">
-                                </a>
-                                <form action="{% url 'list' %}" method="POST"> <!--send the result to add-->
-                                        {% csrf_token %}
-                                        <div class="mb-3">
-                                          <input type="text" class="form-control" placeholder="max value" name="max">
-                                          <input type="text" class="form-control" placeholder="min value" name="min">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                </form>
-                        </ul>
-                        <a href="{% url 'process' %}">Image intensity</a>
-                        
-                {% else %}
-                        <p>"no documents"</p>
-                {% endif %}
-
-                <!-- Upload form. Note enctype attribute!
-                <form action="{% url "list" %}" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <p>{{ form.non_field_errors }}</p>
-                        <p>{{ form.docfile.label_tag }} </p>
-                        <p>
-                                {{ form.docfile.errors }}
-                                {{ form.docfile }}
-                        </p>
-                        <p><input type="submit" value="Upload" /></p>
-                </form> -->
-
-        </body>
-
-</html>
+{% endblock %}

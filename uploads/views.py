@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .forms import ImageForm
+import pdb
 
+def home(request):
+    return render(request,'home.html',{})
 
 def image_upload_view(request):
     """Process images uploaded by users"""
@@ -14,3 +17,19 @@ def image_upload_view(request):
     else:
         form = ImageForm()
     return render(request, 'index.html', {'form': form})
+
+
+def Protein_interaction(request):
+    return render(request,'Protein_interaction.html',{})
+
+def Image_segmentation(resquset):
+    return render(resquset,'Image_segmentation.html',{})
+
+def SMLM(resquset):
+    return render(resquset,'SMLM.html',{})
+
+def Deep_learning(resquset):
+    return render(resquset,'Deep_learning.html',{})
+
+def Genomic_screen(resquset):
+    return render(resquset,'Genomic_screen.html',{})
