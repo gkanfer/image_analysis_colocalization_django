@@ -5,6 +5,20 @@ import pdb
 def home(request):
     return render(request,'home.html',{})
 
+def Protein_interaction(request):
+    """Process images uploaded by users"""
+    #breakpoint()
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # Get the current instance object to display in the template
+            img_obj = form.instance
+            return render(request, 'index.html', {'form': form, 'img_obj': img_obj})
+    else:
+        form = ImageForm()
+    return render(request, 'Protein_interaction.html', {'form': form})
+
 def image_upload_view(request):
     """Process images uploaded by users"""
     if request.method == 'POST':
@@ -19,8 +33,8 @@ def image_upload_view(request):
     return render(request, 'index.html', {'form': form})
 
 
-def Protein_interaction(request):
-    return render(request,'Protein_interaction.html',{})
+# def Protein_interaction(request):
+#     return render(request,'Protein_interaction.html',{})
 
 def Image_segmentation(resquset):
     return render(resquset,'Image_segmentation.html',{})
