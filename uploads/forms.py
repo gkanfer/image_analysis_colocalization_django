@@ -1,17 +1,20 @@
 from django import forms
-from .models import Upload
+from django.db import models
+from .models import Upload,set_intensity
 
 class ImageForm(forms.ModelForm):
     """Form for the image model"""
     class Meta:
         model = Upload
-        #fields = ('title', 'image','action')
-        fields = ('image','action')
+        fields = ['image',]
+        
+        # def __str__(self):
+        #     return super(self.fields['image'])
 
 
-# class ImageForm(forms.ModelForm):
-#     """Form for the image model"""
-#     class Meta:
-#         model = Upload
-#         #fields = ('title', 'image','action')
-#         fields = ('image','action')
+class ImageForm_process(forms.ModelForm):
+    """Form for the image model"""
+    
+    class Meta:
+        model = set_intensity
+        fields = ['min_inten','max_inten',]

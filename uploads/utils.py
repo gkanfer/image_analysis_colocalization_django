@@ -9,13 +9,13 @@ from skimage.exposure import rescale_intensity,histogram
 
 def get_image(image):
     pixels = np.array(image)
-    pixels=pixels[50:300,50:300]
+    #pixels=pixels[50:300,50:300]
     return pixels
 
 def get_image_intensity(image,min_inten,max_inten):
     #image = np.array(image)
-    percentiles = np.percentile(image, (1, 89))
-    percentiles = np.percentile(image, (int(min_inten), int(max_inten)))
+    #percentiles = np.percentile(image, (1, 89))
+    percentiles = np.percentile(image, min_inten, max_inten)
     scaled_ch1 = rescale_intensity(image, in_range=tuple(percentiles))
     return scaled_ch1
 

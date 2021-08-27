@@ -26,15 +26,14 @@ class Upload(models.Model):
     #     pixels = tfi.imread(self.image)
     #     return np.shape(np.array(pixels))
     def save(self,*args,**kwargs):
-        #open image
         #breakpoint()
-        if self.action=='tif':
-            pixels = tfi.imread(self.image)
-        else:
-            pixels = Image.open(self.image)
+        pixels = Image.open(self.image)
         #pixels = tfi.imread(self.image)
         pixels = np.array(pixels)
-        pixels=pixels[:,:,0]
+        if pixels.ndim > 2:
+            pixels=pixels[:,:,0]
+        else:
+            pixels=pixels[:,:]
         #pixels = pixels[0,:,:]
         #use the normalisation method
         img = get_image(pixels)
@@ -47,26 +46,23 @@ class Upload(models.Model):
         super().save(*args,**kwargs)
         #return self.image_png
 
+
+
 class set_intensity(models.Model):
     image = models.ImageField(upload_to='images')
-    min_inten = models.CharField(max_length=5)
-    max_inten = models.CharField(max_length=5)
-    number_of_image_channels = models.CharField(max_length=5)
+    min_inten = models.FloatField(default=1)
+    max_inten = models.FloatField(default=99)
     title = models.CharField(max_length=200)
     def __str__(self):
         return self.title
     def save(self,*args,**kwargs):
-        #open image
-        if self.action=='tif':
-            pixels = tfi.imread(self.image)
-        else:
-            pixels = Image.open(self.image)
-        #breakpoint()
+        pixels = Image.open(self.image)
         #pixels = tfi.imread(self.image)
         pixels = np.array(pixels)
-        pixels=pixels[:,:,int(self.number_of_image_channels)]
-        #pixels = pixels[0,:,:]
-        #use the normalisation method
+        if pixels.ndim > 2:
+            pixels=pixels[:,:,0]
+        else:
+            pixels=pixels[:,:]
         img = get_image_intensity(pixels,self.max_inten,self.max_inten)
         im_pil=Image.fromarray(img)
         #save
