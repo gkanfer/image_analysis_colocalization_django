@@ -7,10 +7,8 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        {{ form_process.as_p }}
         <button type="submit">Upload</button>
-        
-      </form>
+    </form>
       
       {% if img_obj %}
         <h3>Succesfully uploaded : {{img_obj.title}}</h3>
