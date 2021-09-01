@@ -7,6 +7,7 @@ urlpatterns = [
     path('Image_segmentation.html',views.Image_segmentation,name='Image_segmentation'),
     path('SMLM.html',views.SMLM,name='SMLM'),
     path('Deep_learning.html',views.Deep_learning,name='Deep_learning'),
-    path('Genomic_screen.html',views.Genomic_screen,name='Genomic_screen'),]
+    path('Genomic_screen.html',views.Genomic_screen,name='Genomic_screen'),
+    path('Protein_interaction.html',views.image_process,name='Protein_interaction_2')]
     # path('index.html', views.image_upload_view,name='index'),]
     #path('upload/', views.image_upload_view)]

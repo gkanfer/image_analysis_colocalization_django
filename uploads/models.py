@@ -8,17 +8,12 @@ import pdb
 import numpy as np
 import tifffile as tfi
 # Create your models here.
-ACTION_CHOICES = (
-    ('tif file','tif'),
-    ('no tif file','no_tif')
-)
+
 
 class Upload(models.Model):
+    #defult_image1='/images/1_.tif'
     image = models.ImageField(upload_to='images')
-    title = models.CharField(max_length=200)
-    action = models.CharField(max_length=50,choices=ACTION_CHOICES)
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=200,default='Ch1')
     min_inten = models.FloatField(default=1)
     max_inten = models.FloatField(default=76)
     def __str__(self):
@@ -40,6 +35,32 @@ class Upload(models.Model):
         #super().save(*args,**kwargs)
         #return self.image_png
 
+
+
+class test_model(models.Model):    
+    #defult_image2='/images/0_.tif'
+    image_2 = models.ImageField(upload_to='images')
+    title_2 = models.CharField(max_length=200,default='Ch2')
+    min_inten_2 = models.FloatField(default=1)
+    max_inten_2 = models.FloatField(default=76)
+    def __str__(self):
+        return self.title_2
+        #breakpoint()
+    # def __str__(self):
+    #     pixels = tfi.imread(self.image)
+    #     return np.shape(np.array(pixels))
+    def save(self,*args,**kwargs):
+        #breakpoint()
+        image_2 = Image.open(self.image_2)
+        img = get_image_intensity(image_2,self.min_inten_2,self.max_inten_2)
+        im_pil=Image.fromarray(img)
+        #save
+        buffer = BytesIO()
+        im_pil.save(buffer,format='png')
+        image_png = buffer.getvalue()
+        self.image_2.save(str(self.image_2), ContentFile(image_png),save=False)
+        #super().save(*args,**kwargs)
+        #return self.image_png
 
 
 # class set_intensity(models.Model):

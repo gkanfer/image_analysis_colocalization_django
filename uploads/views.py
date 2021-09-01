@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from .forms import ImageForm
+from django.shortcuts import render,HttpResponseRedirect
+from .forms import ImageForm,ImageForm_2
 from .utils import get_image, get_image_intensity
-from .models import Upload
+from .models import Upload, test_model
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy as np
@@ -17,42 +17,54 @@ def Protein_interaction(request):
     """Process images uploaded by users"""
     #breakpoint()
     if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            img_obj = form.instance
-            return render(request, 'Protein_interaction.html', {'form': form, 'img_obj': img_obj})
+        #breakpoint()
+        ImageForm_form = ImageForm(request.POST, request.FILES)
+        ImageForm2_from = ImageForm_2(request.POST, request.FILES)
+        if ImageForm_form.is_valid():
+            img_obj = ImageForm_form.instance
+            return render(request, 'Protein_interaction.html', {'ImageForm_form': ImageForm_form, 'img_obj': img_obj})
+        if ImageForm2_from.is_valid():
+            img_obj_2 = ImageForm2_from.instance
+            return render(request, 'Protein_interaction.html', {'ImageForm2_from': ImageForm2_from,'img_obj_2': img_obj_2})
 
     else:
-        form = ImageForm()
-    return render(request, 'Protein_interaction.html', {'form': form})
-
-# def test(request):
-#     breakpoint()
-#     # if request.method == 'POST':
-#     #     form_process = ImageForm_process(request.POST)    
-#     #     breakpoint()
-#     #     if form_process.is_valid():
-            
-#     #         #pixels=ImageForm.
-#     # else:
-#     form_process=ImageForm_process()
-#     return render(request, 'Protein_interaction.html', {'form_process': form_process})         
-    
+        ImageForm_form = ImageForm()
+        ImageForm2_from = ImageForm_2()
+    return render(request, 'Protein_interaction.html', {'ImageForm_form': ImageForm_form,'ImageForm2_from':ImageForm2_from})
 
 
-def image_process(request,img_obj):
+
+
+# def Protein_interaction(request):
+#     """Process images uploaded by users"""
+#     #breakpoint()
+#     if request.method == 'POST':
+#         form = ImageForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             img_obj = form.instance
+#             return render(request, 'Protein_interaction.html', {'form': form, 'img_obj': img_obj})
+
+#     else:
+#         form = ImageForm()
+#     return render(request, 'Protein_interaction.html', {'form': form})
+
+
+
+def image_process(request):
     """Process images uploaded by users"""
-    if request.method == 'POST':
-        form = ImageForm_process(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            # Get the current instance object to display in the template
-            img_obj = form.instance
-            return render(request, 'index.html', {'form': form, 'img_obj': img_obj})
-    else:
-        form = ImageForm()
-    return render(request, 'index.html', {'form': form})
+    pass
+    # breakpoint()
+    # if request.method == 'POST':
+    #     form2 = ImageForm_2(request.POST, request.FILES)
+    #     if form2.is_valid():
+    #         form2.save()
+    #         # Get the current instance object to display in the template
+    #         img_obj2 = form2.instance
+    #         return render(request, 'Protein_interaction.html', {'form2': form2, 'img_obj2': img_obj2})
+    # else:
+    #     form2 = ImageForm_2()
+    # return render(request, 'Protein_interaction.html', {'form2': form2})
 
 
 # def Protein_interaction(request):

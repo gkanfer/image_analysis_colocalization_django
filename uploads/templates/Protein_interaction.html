@@ -2,20 +2,36 @@
 {% extends 'base.html' %}
 
 {% block 'content' %}
-
-  
+<section class="parent">
+  <section class="child">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ ImageForm_form.as_p }}
         <button type="submit">Upload</button>
-    </form>
+    
       
       {% if img_obj %}
-        <h3>Succesfully uploaded : {{img_obj.title}}</h3>
-        <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+        <h3>Channel 1: {{img_obj.title}}</h3>
+        <img src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px">
       {% endif %}
+    </form>
+      
+  </section>   
+  <section class="child">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ ImageForm2_from.as_p }}
+      <button type="submit">Upload</button>
+    
+    
+    {% if img_obj_2 %}
+      <h3>Channel 2: {{img_obj_2.title}}</h3>
+      <img src="{{ img_obj_2.image.url }}" alt="connect" style="max-height:300px">
+    {% endif %}
+  </form>
+  </section>
+</section>
 
- 
  {% endblock %}
 
  
