@@ -17,7 +17,7 @@ class Upload(models.Model):
     min_inten = models.FloatField(default=1)
     max_inten = models.FloatField(default=76)
     def __str__(self):
-        return self.title
+        return str(self.id)
         #breakpoint()
     # def __str__(self):
     #     pixels = tfi.imread(self.image)
@@ -32,7 +32,7 @@ class Upload(models.Model):
         im_pil.save(buffer,format='png')
         image_png = buffer.getvalue()
         self.image.save(str(self.image), ContentFile(image_png),save=False)
-        #super().save(*args,**kwargs)
+        super().save(*args,**kwargs)
         #return self.image_png
 
 
@@ -44,7 +44,7 @@ class test_model(models.Model):
     min_inten_2 = models.FloatField(default=1)
     max_inten_2 = models.FloatField(default=76)
     def __str__(self):
-        return self.title_2
+        return str(self.id)
         #breakpoint()
     # def __str__(self):
     #     pixels = tfi.imread(self.image)
